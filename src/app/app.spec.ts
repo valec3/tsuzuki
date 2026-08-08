@@ -14,10 +14,10 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should render title', async () => {
+  it('should have title Tsuzuki', () => {
     const fixture = TestBed.createComponent(App);
-    await fixture.whenStable();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, index');
+    const app = fixture.componentInstance;
+    // Access the signal value — after Phase 4, title signal should be 'Tsuzuki'
+    expect(app['title']()).toBe('Tsuzuki');
   });
 });

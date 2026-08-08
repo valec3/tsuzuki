@@ -39,6 +39,9 @@ testem.log
 /typings
 __screenshots__/
 
+# SDD
+.atl/
+
 # System files
 .DS_Store
 Thumbs.db

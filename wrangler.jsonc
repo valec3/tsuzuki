@@ -1,0 +1,25 @@
+{
+  "name": "tsuzuki",
+  "compatibility_date": "2025-03-01",
+  "main": "workers/api/index.ts",
+  "routes": [
+    {
+      "pattern": "api/*",
+      "script": "api"
+    }
+  ],
+  "pages_build_output_dir": "dist/index/browser",
+  "d1_databases": [
+    {
+      "binding": "tsuzuki-db",
+      "database_name": "tsuzuki-db",
+      "database_id": "PLACEHOLDER"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "tsuzuki-backups",
+      "bucket_name": "tsuzuki-backups"
+    }
+  ]
+}
