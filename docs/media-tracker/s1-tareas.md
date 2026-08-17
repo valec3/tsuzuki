@@ -34,14 +34,14 @@
 
 ## Checklist de verificación (antes de pasar a S2)
 
-- [ ] `wrangler d1 create` ejecutado, `database_id` guardado en `wrangler.jsonc`
-- [ ] `wrangler d1 execute tsuzuki-db --file=migrations/001_initial.sql` sin errores
-- [ ] `wrangler d1 execute tsuzuki-db --command ".schema"` muestra las 2 tablas
-- [ ] `wrangler d1 execute tsuzuki-db --command ".indexes"` muestra los 5 índices
-- [ ] Entendés por qué cada columna tiene el tipo que tiene
-- [ ] Entendés qué hace cada `CHECK` constraint
-- [ ] Los tests pasan (`npx vitest run` en `workers/`)
-- [ ] Puedes explicarle a alguien más por qué `ULID` > `UUID` para este caso
+- [x] `wrangler d1 create` ejecutado, `database_id` guardado en `wrangler.jsonc`
+- [x] `wrangler d1 execute tsuzuki-db --file=migrations/001_initial.sql` sin errores
+- [x] `wrangler d1 execute tsuzuki-db --command ".schema"` muestra las 3 tablas (media_items, media_sources, progress_history)
+- [x] `wrangler d1 execute tsuzuki-db --command ".indexes"` muestra los 6 índices
+- [x] Entendés por qué cada columna tiene el tipo que tiene
+- [x] Entendés qué hace cada `CHECK` constraint
+- [x] Los tests pasan (`npx vitest run` en `workers/`) — 12 tests, todos verdes
+- [x] Puedes explicarle a alguien más por qué `ULID` > `UUID` para este caso
 
 ---
 

@@ -39,6 +39,12 @@ testem.log
 /typings
 __screenshots__/
 
+# Wrangler local state
+.wrangler/state/
+
+# Workers
+workers/node_modules/
+
 # SDD
 .atl/
 
