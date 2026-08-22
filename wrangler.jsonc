@@ -2,7 +2,10 @@
 	"name": "tsuzuki",
 	"compatibility_date": "2025-03-01",
 	"main": "workers/api/index.ts",
-	"pages_build_output_dir": "dist/index/browser",
+	"assets": {
+		"directory": "dist/index/browser"
+	},
+
 	"d1_databases": [
 		{
 			"binding": "tsuzuki_db",

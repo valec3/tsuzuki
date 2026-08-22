@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import type Database from 'better-sqlite3';
-import { createSQLite } from './test-utils';
+import { createSQLite } from './shared/test-utils';
 
 const ITEM = {
   id: '01HXYZ00000000000000000001',

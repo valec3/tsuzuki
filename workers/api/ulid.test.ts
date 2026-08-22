@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { ulid } from './ulid';
+import { ulid } from './shared/ulid';
 
 // 
 const CROCKFORD_BASE32 = /^[0-9A-HJKMNP-TV-Z]{26}$/;

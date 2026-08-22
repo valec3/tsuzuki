@@ -15,8 +15,9 @@
 6. [Fase 5 — Backups (S9–S10)](#6-fase-5--backups)
 7. [Fase 6 — PWA + Offline (S11)](#7-fase-6--pwa--offline)
 8. [Fase 7 — Polish + QA (S12)](#8-fase-7--polish--qa)
-9. [Comandos de referencia](#9-comandos-de-referencia)
-10. [Troubleshooting](#10-troubleshooting)
+9. [Fase 8 — Multi-Tenant / Multi-Usuario (Post-MVP)](#9-fase-8--multi-tenant--multi-usuario-post-mvp)
+10. [Comandos de referencia](#10-comandos-de-referencia)
+11. [Troubleshooting](#11-troubleshooting)
 
 ---
 
@@ -1172,7 +1173,28 @@ Checklist:
 
 ---
 
-## 9. Comandos de Referencia
+## 9. Fase 8 — Multi-Tenant / Multi-Usuario (Post-MVP)
+
+> **Objetivo**: Permitir múltiples usuarios aislados compartiendo la misma instancia de DB y Workers mediante aislamiento por la columna `user_id`.
+
+### S13 — Migración Multi-Tenant + Aislamiento en API
+
+1. **Migración SQL (`migrations/002_multi_tenant.sql`)**:
+   - Agregar columna `user_id` a la tabla `media_items`.
+   - Asignar un `user_id` por defecto para los registros creados durante el MVP.
+   - Crear índices compuestos `(user_id, status)` y `(user_id, type)` para optimizar búsquedas aisladas por usuario.
+
+2. **Auth Middleware en Hono**:
+   - Extraer e identificar el `user_id` único desde las cabeceras de sesión de Cloudflare Access (`CF-Access-Authenticated-User-Email` o subject del JWT token).
+   - Inyectar el `userId` en el contexto `c` de Hono.
+
+3. **Refactor de Endpoints (Hono)**:
+   - Modificar todas las consultas SQL en `workers/api/` para incluir obligatoriamente la cláusula `WHERE user_id = ?`.
+   - Garantizar que los comandos de actualización (`PATCH`), eliminación (`DELETE`) e historial (`POST /progress`) verifiquen la propiedad del ítem antes de ejecutar la transacción.
+
+---
+
+## 10. Comandos de Referencia
 
 ### Desarrollo
 

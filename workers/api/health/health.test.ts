@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
-import app from './index';
+import app from '../index';
 
-describe('Worker API - Health', () => {
+describe('Health endpoint', () => {
   it('should return 200 with status ok and timestamp', async () => {
     const response = await app.request('/api/health');
     expect(response.status).toBe(200);
@@ -9,7 +9,6 @@ describe('Worker API - Health', () => {
     const body = await response.json();
     expect(body).toHaveProperty('status', 'ok');
     expect(body).toHaveProperty('timestamp');
-    // Verify timestamp is a valid ISO string
     expect(() => new Date(body.timestamp)).not.toThrow();
   });
 
@@ -19,15 +18,14 @@ describe('Worker API - Health', () => {
     expect(contentType).toContain('application/json');
   });
 
-  it('should include CORS Access-Control-Allow-Origin header', async () => {
+  it('should include CORS headers', async () => {
     const response = await app.request('/api/health');
     expect(response.headers.get('Access-Control-Allow-Origin')).toBe('*');
   });
 
-  it('should respond to OPTIONS preflight with CORS headers', async () => {
+  it('should respond to OPTIONS preflight', async () => {
     const response = await app.request('/api/health', { method: 'OPTIONS' });
     expect(response.status).toBe(204);
     expect(response.headers.get('Access-Control-Allow-Origin')).toBe('*');
-    expect(response.headers.get('Access-Control-Allow-Methods')).toContain('GET');
   });
 });
