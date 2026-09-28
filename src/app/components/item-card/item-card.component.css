@@ -1,0 +1,228 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #0d1117;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+  user-select: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover,
+.card:focus-visible {
+  border-color: rgba(88, 166, 255, 0.35);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.55);
+}
+
+/* --- Portada fija sin zoom agresivo --- */
+.cover-wrapper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Viñeta sutil permanente en la parte superior para garantizar legibilidad de los badges */
+.cover-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(13, 17, 23, 0.75) 0%, transparent 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+.cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.cover-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #161b22, #0d1117);
+  color: var(--text-secondary);
+  font-size: 3.5rem;
+  font-weight: 800;
+}
+
+/* --- Micro-etiqueta Superior Izquierda (Opción B) --- */
+.top-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(13, 17, 23, 0.82);
+  color: #e6edf3;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Overlay Integrado y Orgánico (Sin Blur, solo degradado nítido) --- */
+.info-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* Al hacer hover o focus se funde suavemente */
+.card:hover .info-overlay,
+.card:focus-visible .info-overlay,
+.card:focus-within .info-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Degradado oscuro limpio sin empañar la imagen con blur */
+.glass-panel {
+  padding: 3.5rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: linear-gradient(
+    to top,
+    rgba(10, 12, 16, 0.98) 0%,
+    rgba(10, 12, 16, 0.88) 50%,
+    rgba(10, 12, 16, 0.45) 80%,
+    transparent 100%
+  );
+}
+
+.title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.meta-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.72rem;
+}
+
+.progress-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.meta-label {
+  color: #8b949e;
+  font-weight: 500;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #58a6ff;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.date-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  padding-left: 0.65rem;
+}
+
+.meta-val {
+  color: #c9d1d9;
+  font-weight: 600;
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.score-block {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding-left: 0.2rem;
+}
+
+.score-star {
+  color: #e3b341;
+  font-size: 0.85rem;
+}
+
+/* Botón ultra-refinado integrado, no invasivo */
+.btn-action {
+  width: 100%;
+  padding: 0.55rem;
+  background: #1f6feb;
+  color: #ffffff;
+  border: 1px solid rgba(88, 166, 255, 0.5);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-action:hover {
+  background: #388bfd;
+  border-color: #79c0ff;
+}
+
+.btn-action:active {
+  transform: scale(0.99);
+}

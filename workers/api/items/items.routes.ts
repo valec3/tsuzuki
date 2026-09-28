@@ -46,6 +46,37 @@ items.get('/', async (c) => {
   return c.json(results);
 });
 
+// ─── GET /stats — Resumen de estadísticas y contadores para la UI ──
+items.get('/stats', async (c) => {
+  const db = c.var.db;
+  if (!db) {
+    return c.json({ total: 0, by_status: {}, total_chapters: 0 });
+  }
+
+  // 1. Conteo agrupado por estado
+  const statusQuery = await db
+    .prepare('SELECT status, COUNT(*) as count FROM media_items GROUP BY status')
+    .all<{ status: string; count: number }>();
+
+  // 2. Suma total de capítulos leídos
+  const sumQuery = await db
+    .prepare('SELECT COALESCE(SUM(current_chapter), 0) as total_chapters FROM media_items')
+    .first<{ total_chapters: number }>();
+
+  const byStatus: Record<string, number> = {};
+  let total = 0;
+  for (const row of statusQuery.results) {
+    byStatus[row.status] = row.count;
+    total += row.count;
+  }
+
+  return c.json({
+    total,
+    by_status: byStatus,
+    total_chapters: sumQuery?.total_chapters ?? 0,
+  });
+});
+
 // ─── GET /:id — Get single item with history ───────────────────────
 items.get('/:id', async (c) => {
   const db = c.var.db;

@@ -1,0 +1,59 @@
+<div class="container">
+  <header class="header">
+    <div class="header-content">
+      <h1 class="logo">Tsuzuki <span>(続き)</span></h1>
+      <p class="subtitle">Mi tracker de lectura y anime</p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <app-filter-bar
+      [items]="items()"
+      [stats]="stats()"
+      [activeStatus]="activeStatus()"
+      [searchQuery]="searchQuery()"
+      [viewMode]="viewMode()"
+      (statusChange)="onStatusChange($event)"
+      (viewModeChange)="onViewModeChange($event)"
+      (sortChange)="onSortChange($event)"
+      (searchQueryChange)="onSearchQueryChange($event)"
+    ></app-filter-bar>
+
+    <!-- Estado de Carga -->
+    @if (loading()) {
+      <div class="state-container" aria-live="polite">
+        <div class="spinner" aria-hidden="true"></div>
+        <p>Cargando tu biblioteca...</p>
+      </div>
+    }
+
+    <!-- Estado de Error -->
+    @else if (error()) {
+      <div class="state-container error" role="alert">
+        <p>{{ error() }}</p>
+        <button type="button" class="btn-retry" (click)="onRetry()">Reintentar</button>
+      </div>
+    }
+
+    <!-- Grilla de Ítems -->
+    @else if (items().length > 0) {
+      <section class="grid" aria-label="Lista de medios">
+        @for (manga of items(); track manga.id) {
+          <app-item-card [item]="manga" (increment)="onIncrement($event)" />
+        }
+      </section>
+    }
+
+    <!-- Estado Vacío (Empty state amigable) -->
+    @else {
+      <div class="state-container empty">
+        <div class="empty-icon" aria-hidden="true">📖</div>
+        <h2>Tu biblioteca está vacía</h2>
+        <p>Aún no tienes lecturas registradas en la base de datos.</p>
+        <button type="button" class="btn-primary" (click)="addSampleItem()">
+          Cargar un manga de prueba
+        </button>
+      </div>
+    }
+  </main>
+</div>

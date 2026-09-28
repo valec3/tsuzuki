@@ -39,8 +39,11 @@ testem.log
 /typings
 __screenshots__/
 
-# Wrangler local state
+# Wrangler local state & secrets
 .wrangler/state/
+.dev.vars
+.env
+.env*.local
 
 # Workers
 workers/node_modules/

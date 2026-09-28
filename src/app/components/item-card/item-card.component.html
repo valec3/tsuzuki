@@ -1,0 +1,68 @@
+<article class="card" tabindex="0">
+  <!-- Portada completa de fondo -->
+  <div class="cover-wrapper">
+    @if (item().cover_url) {
+      <img
+        class="cover-img"
+        [src]="item().cover_url"
+        [alt]="'Portada de ' + item().title"
+        loading="lazy"
+      />
+    } @else {
+      <div class="cover-placeholder" aria-hidden="true">
+        <span>{{ item().title.charAt(0).toUpperCase() }}</span>
+      </div>
+    }
+
+    <!-- Micro-etiqueta de tipo sutil en la esquina superior izquierda -->
+    <div class="top-badges">
+      <span class="badge badge-type">{{ item().type }}</span>
+    </div>
+  </div>
+
+  <!-- Panel de Información flotante con Glassmorphism (Visible en Hover / Focus) -->
+  <div class="info-overlay">
+    <div class="glass-panel">
+      <h2 class="title" [title]="item().title">{{ item().title }}</h2>
+
+      <div class="meta-row">
+        <div class="progress-block">
+          <span class="meta-label">Capítulos: {{ item().current_chapter }} / {{ item().total_chapters || '?' }}</span>
+          <div
+            class="progress-track"
+            role="progressbar"
+            [attr.aria-valuenow]="item().current_chapter"
+            [attr.aria-valuemin]="0"
+            [attr.aria-valuemax]="item().total_chapters || 100"
+          >
+            <div class="progress-fill" [style.width.%]="progressPercentage()"></div>
+          </div>
+        </div>
+
+        @if (formattedDate()) {
+          <div class="date-block">
+            <span class="meta-label">Creación</span>
+            <span class="meta-val">{{ formattedDate() }}</span>
+          </div>
+        }
+
+        @if (item().score) {
+          <div class="score-block">
+            <span class="score-star" aria-hidden="true">★</span>
+            <span class="score-val">{{ item().score }}</span>
+          </div>
+        }
+      </div>
+
+      <!-- Botón de acción principal: Avanzar capítulo -->
+      <button
+        type="button"
+        class="btn-action"
+        (click)="onIncrementClick($event)"
+        [attr.aria-label]="'Avanzar un capítulo de ' + item().title"
+      >
+        +1 CAPÍTULO
+      </button>
+    </div>
+  </div>
+</article>

@@ -30,6 +30,6 @@ export function errorHandler(err: Error, c: Context) {
   }
 
   console.error('Unhandled error:', err);
-  return c.json({ error: 'Internal server error', code: 'INTERNAL' }, 500);
+  return c.json({ error: err.message || 'Internal server error', code: 'INTERNAL' }, 500);
 }
 

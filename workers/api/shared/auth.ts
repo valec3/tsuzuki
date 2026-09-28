@@ -18,9 +18,15 @@ export async function authMiddleware(c: Context, next: Next) {
   const cfAuthHeader = c.req.header('CF-Authorization');
   const cfAuthCookie = c.req.header('Cookie')?.includes('CF_Authorization');
 
+  const host = c.req.header('Host') ?? '';
+  const isLocalHost = host.includes('localhost') || host.includes('127.0.0.1');
+
   // Permitir bypass en entorno de test/local cuando no hay cabecera explícita
-  // o cuando la cabecera es 'test-token'
-  const isTestOrDev = process.env['NODE_ENV'] === 'test' || cfAuthHeader === 'test-token';
+  // o cuando la cabecera es 'test-token', o cuando la petición proviene de localhost
+  const isTestOrDev =
+    process.env['NODE_ENV'] === 'test' ||
+    cfAuthHeader === 'test-token' ||
+    isLocalHost;
 
   if (!cfAuthHeader && !cfAuthCookie && !isTestOrDev) {
     throw new AppError('UNAUTHORIZED', 'Acceso no autorizado: Sesión de Cloudflare Access requerida', 401);
